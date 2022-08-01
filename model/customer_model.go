@@ -19,6 +19,7 @@ type Customer struct {
 		Country string `json:"country"`
 		ZipCode string `json:"zipCode"`
 	}
-	BirthDate        string  `json:"birthDate"`
-	TransactionValue float64 `json:"transactionValue"`
+	BirthDate         string  `json:"birthDate"`
+	TransactionValue  float64 `json:"transactionValue"`
+	TransactionStatus string  `json:"transactionStatus"`
 }

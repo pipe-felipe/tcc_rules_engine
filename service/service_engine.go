@@ -3,13 +3,15 @@ package service
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/labstack/echo/v4"
-	"github.com/pipe-felipe/tcc_rules_engine/model"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/labstack/echo/v4"
+	"github.com/pipe-felipe/tcc_rules_engine/model"
+	"github.com/pipe-felipe/tcc_rules_engine/rules"
 )
 
 // Isso é o que eu vou fazer para o Random POST
@@ -86,7 +88,11 @@ func GetCustomerFromTccRandom(echoContext echo.Context) error {
 		return echoContext.String(http.StatusInternalServerError, "Failed to unmarshal body")
 	}
 
-	fmt.Println("Imprimindo aqui olhaaaaaaaaaaaaaaaaaaaaaaaaaaaa: ", customer.Name)
+	fmt.Println("Customer before: ", customer.TransactionStatus)
+
+	rules.ReproveByEmail(&customer)
+
+	fmt.Println("Customer after: ", customer.TransactionStatus)
 
 	log.Printf("Customer: %+v", customer)
 	return echoContext.JSON(http.StatusOK, customer)
