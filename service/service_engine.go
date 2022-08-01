@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/pipe-felipe/tcc_rules_engine/model"
 	"io"
@@ -84,6 +85,8 @@ func GetCustomerFromTccRandom(echoContext echo.Context) error {
 		log.Printf("Failed to unmarshal body: %s", err)
 		return echoContext.String(http.StatusInternalServerError, "Failed to unmarshal body")
 	}
+
+	fmt.Println("Imprimindo aqui olhaaaaaaaaaaaaaaaaaaaaaaaaaaaa: ", customer.Name)
 
 	log.Printf("Customer: %+v", customer)
 	return echoContext.JSON(http.StatusOK, customer)
