@@ -1,7 +1,7 @@
 package tcc_random_handler
 
 import (
-	"tcc_rules_engine/service"
+	"github.com/pipe-felipe/tcc_rules_engine/service"
 )
 
 func EngineReturn() {

@@ -1,6 +1,9 @@
 package service
 
 import (
+	"encoding/json"
+	"github.com/labstack/echo/v4"
+	"github.com/pipe-felipe/tcc_rules_engine/model"
 	"io"
 	"io/ioutil"
 	"log"
@@ -8,6 +11,8 @@ import (
 	"strings"
 )
 
+// Isso é o que eu vou fazer para o Random POST
+// Essa função vai ser chamada quando todo o dado for processado pelas regras
 func SendCurateDataToRandom(url string) {
 	requestBody := strings.NewReader(`
 		{
@@ -42,7 +47,7 @@ func SendCurateDataToRandom(url string) {
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-
+			log.Fatal(err)
 		}
 	}(response.Body)
 
@@ -52,4 +57,34 @@ func SendCurateDataToRandom(url string) {
 	}
 
 	log.Printf("%s", content)
+}
+
+func GetCustomerFromTccRandom(echoContext echo.Context) error {
+	customer := model.Customer{}
+
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			echoContext.Logger().Error(err)
+		}
+	}(echoContext.Request().Body)
+
+	body, err := ioutil.ReadAll(echoContext.Request().Body)
+	if err != nil {
+		err := echoContext.JSON(http.StatusBadRequest, err)
+		if err != nil {
+			return nil
+		}
+		log.Printf("Failed to read body: %s", err)
+		return echoContext.String(http.StatusInternalServerError, "Failed to read body")
+	}
+
+	err = json.Unmarshal(body, &customer)
+	if err != nil {
+		log.Printf("Failed to unmarshal body: %s", err)
+		return echoContext.String(http.StatusInternalServerError, "Failed to unmarshal body")
+	}
+
+	log.Printf("Customer: %+v", customer)
+	return echoContext.JSON(http.StatusOK, customer)
 }

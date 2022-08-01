@@ -1,4 +1,4 @@
-module tcc_rules_engine
+module github.com/pipe-felipe/tcc_rules_engine
 
 go 1.18
 
