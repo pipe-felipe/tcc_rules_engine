@@ -1,10 +1,10 @@
 package rules
 
 import (
-	"github.com/pipe-felipe/tcc_rules_engine/model"
+	"github.com/pipe-felipe/tcc_rules_engine/repository"
 )
 
-func ReproveByEmail(customer *model.Customer) {
+func ReproveByEmail(customer *repository.Customer) {
 	if customer.Email == "salafrario@ladrão.com" {
 		customer.TransactionStatus = "REPROVE"
 	} else {
