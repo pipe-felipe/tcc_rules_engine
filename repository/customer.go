@@ -47,9 +47,9 @@ func (c *Customer) GetTransactionalData(echoContext echo.Context) (error, io.Rea
 	return echoContext.JSON(http.StatusOK, c), bytes.NewReader(body)
 }
 
-func (c *Customer) ReadTest(e echo.Context) error {
+func (c *Customer) SendTransactionalData(e echo.Context) error {
 	url := "http://localhost:8080/customer"
-	err, body := c.GetTransactionalData(e)
+	_, body := c.GetTransactionalData(e)
 	response, err := http.Post(url, "application/json", body)
 	if err != nil {
 		panic(err)

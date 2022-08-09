@@ -6,5 +6,5 @@ import (
 )
 
 func CreateCustomer(e *echo.Echo, c *repository.Customer) {
-	e.POST("/engine/customer", c.ReadTest)
+	e.POST("/engine/customer", c.SendTransactionalData)
 }
