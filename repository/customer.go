@@ -3,11 +3,12 @@ package repository
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/labstack/echo/v4"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"github.com/labstack/echo/v4"
 )
 
 type Customer struct {
