@@ -1,4 +1,4 @@
-package repository
+package repositories
 
 type CreditCard struct {
 	Flag      string `json:"flag"`

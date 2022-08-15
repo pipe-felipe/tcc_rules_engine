@@ -1,4 +1,4 @@
-package repository
+package repositories
 
 type Address struct {
 	Street  string `json:"street"`
