@@ -1,7 +1,7 @@
 PROJECT_NAME := "tcc_rules_engine"
 
-.PHONY: make
-make:
+.PHONY: build
+build:
 	go build -o ./build/$(PROJECT_NAME)
 
 .PHONY: clean
