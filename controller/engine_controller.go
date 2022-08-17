@@ -6,5 +6,5 @@ import (
 )
 
 func TransactionDataRetriever(e *echo.Echo) {
-	e.POST("/engine/customer", handlers.GetTransactionalData)
+	e.POST("/engine/customer", handlers.TransactionalDataHandler)
 }
