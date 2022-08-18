@@ -3,7 +3,7 @@ package handlers
 import (
 	"bytes"
 	"encoding/json"
-	"io"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -30,46 +30,29 @@ func TransactionalDataHandler(echoContext echo.Context) error {
 		TransactionValue: c.TransactionValue,
 	}
 	rulesHandler(&customer)
-	SendTransactionalData(&customer)
+	returnToTccRandom(customer)
 	return echoContext.JSON(http.StatusOK, customer)
 }
 
-func SendTransactionalData(dto *CustomerDTO) {
-	URL := "http://localhost:8080/customer"
-
+func returnToTccRandom(dto CustomerDTO) {
 	jsonData, err := json.Marshal(dto)
-	responseBody := bytes.NewBuffer(jsonData)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Error on marshal: ", err)
 	}
 
-	r, err := http.NewRequest("POST", URL, responseBody)
+	resp, err := http.Post(TccRandomUrl, "application/json",
+		bytes.NewBuffer(jsonData))
+
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Error on POST the data to tcc_random", err)
 	}
 
-	r.Header.Add("Content-Type", "application/json")
-	client := &http.Client{}
-	res, err := client.Do(r)
+	var res map[string]interface{}
+
+	err = json.NewDecoder(resp.Body).Decode(&res)
 	if err != nil {
-		panic(err)
+		return
 	}
 
-	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-
-		}
-	}(res.Body)
-
-	post := &CustomerDTO{}
-	derr := json.NewDecoder(res.Body).Decode(post)
-	if derr != nil {
-		panic(derr)
-	}
-
-	if res.StatusCode != http.StatusCreated {
-		panic(res.Status)
-	}
-	log.Println("Final: ", post)
+	fmt.Println("Sent ro random: ", res["json"])
 }

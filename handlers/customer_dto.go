@@ -1,12 +1,12 @@
 package handlers
 
 type CustomerDTO struct {
-	Name              string
-	Email             string
-	Document          string
-	CreditCard        CreditCard
-	Address           Address
-	BirthDate         string
-	TransactionValue  float64
-	TransactionStatus string
+	Name              string     `json:"name"`
+	Email             string     `json:"email"`
+	Document          string     `json:"document"`
+	CreditCard        CreditCard `json:"creditCard"`
+	Address           Address    `json:"address"`
+	BirthDate         string     `json:"birthDate"`
+	TransactionValue  float64    `json:"transactionValue"`
+	TransactionStatus string     `json:"transactionStatus"`
 }
