@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/pipe-felipe/tcc_rules_engine/cmd/rules"
 	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/pipe-felipe/tcc_rules_engine/rules"
 )
 
 func rulesHandler(dto *CustomerDTO) {

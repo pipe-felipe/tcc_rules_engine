@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/pipe-felipe/tcc_rules_engine/controller"
+	"github.com/pipe-felipe/tcc_rules_engine/cmd/controller"
 )
 
 func main() {
