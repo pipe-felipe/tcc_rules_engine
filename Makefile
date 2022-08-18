@@ -11,3 +11,6 @@ clean:
 .PHONY: run
 run:
 	./build/$(PROJECT_NAME)
+
+.PHONY: exec
+exec: clean build run
