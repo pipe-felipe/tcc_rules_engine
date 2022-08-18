@@ -2,8 +2,8 @@ package handlers
 
 type CustomerDTO struct {
 	Name              string
-	Document          string
 	Email             string
+	Document          string
 	CreditCard        CreditCard
 	Address           Address
 	BirthDate         string

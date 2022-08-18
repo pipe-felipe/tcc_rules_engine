@@ -2,8 +2,8 @@ package handlers
 
 type Customer struct {
 	Name              string     `json:"name"`
-	Document          string     `json:"document"`
 	Email             string     `json:"email"`
+	Document          string     `json:"document"`
 	CreditCard        CreditCard `json:"creditCard"`
 	Address           Address    `json:"address"`
 	BirthDate         string     `json:"birthDate"`
