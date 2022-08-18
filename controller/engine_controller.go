@@ -2,9 +2,9 @@ package controller
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/pipe-felipe/tcc_rules_engine/repositories"
+	"github.com/pipe-felipe/tcc_rules_engine/handlers"
 )
 
-func CreateCustomer(e *echo.Echo, c *repositories.Customer) {
-	e.POST("/engine/customer", c.CustomerHandler)
+func TransactionDataRetriever(e *echo.Echo) {
+	e.POST("/engine/customer", handlers.TransactionalDataHandler)
 }

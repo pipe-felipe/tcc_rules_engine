@@ -2,8 +2,8 @@ package rules
 
 func ReproveByEmail(email string) string {
 	if email != "salafrario@ladrão.com" {
-		return "APPROVE"
+		return "APROVED"
 	} else {
-		return "REPROVE"
+		return "REPROVED"
 	}
 }
