@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/pipe-felipe/tcc_rules_engine/cmd/rules"
 	"log"
 	"net/http"
+
+	"github.com/pipe-felipe/tcc_rules_engine/cmd/rules"
 
 	"github.com/labstack/echo/v4"
 )
@@ -18,7 +19,7 @@ func rulesHandler(dto *CustomerDTO) {
 func TransactionalDataHandler(echoContext echo.Context) error {
 	c := new(Customer)
 	if err := echoContext.Bind(c); err != nil {
-		return nil
+		return err
 	}
 	customer := CustomerDTO{
 		Name:             c.Name,
@@ -27,6 +28,9 @@ func TransactionalDataHandler(echoContext echo.Context) error {
 		CreditCard:       c.CreditCard,
 		Address:          c.Address,
 		BirthDate:        c.BirthDate,
+		Age:              c.Age,
+		TransactionCount: c.TransactionCount,
+		AllTransactions:  c.AllTransactions,
 		TransactionValue: c.TransactionValue,
 	}
 	rulesHandler(&customer)
@@ -51,7 +55,7 @@ func returnToTccRandom(dto CustomerDTO) {
 
 	err = json.NewDecoder(resp.Body).Decode(&res)
 	if err != nil {
-		return
+		panic(err)
 	}
 
 	fmt.Println("Sent ro random: ", res["json"])
