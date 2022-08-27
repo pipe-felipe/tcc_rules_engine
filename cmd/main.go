@@ -11,8 +11,10 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
+
 	controller.TransactionDataRetriever(e)
 	err := e.Start(":8082")
+
 	if err != nil {
 		panic(err)
 	}
