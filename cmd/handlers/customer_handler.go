@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -13,29 +12,34 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func rulesHandler(dto *Customer) {
+func rulesHandler(dto *CustomerDTO) {
 	dto.TransactionStatus = rules.ReproveByEmail(dto.Email)
 }
 
 func TransactionalDataHandler(echoContext echo.Context) error {
-	c := Customer{}
+	//c := Customer{}
 	//
 	//if err := echoContext.Bind(&c); err != nil {
 	//	return err
 	//}
-
-	defer echoContext.Request().Body.Close()
-
-	b, err := ioutil.ReadAll(echoContext.Request().Body)
-	if err != nil {
-		log.Println("Faile to reagin body", err)
-		return echoContext.String(http.StatusInternalServerError, "DEU RUIM")
-	}
-	err = json.Unmarshal(b, &c)
-	if err != nil {
-		print("deu ruim no json")
-	}
-
+	//
+	//defer func(Body io.ReadCloser) {
+	//	err := Body.Close()
+	//	if err != nil {
+	//
+	//	}
+	//}(echoContext.Request().Body)
+	//
+	//b, err := ioutil.ReadAll(echoContext.Request().Body)
+	//if err != nil {
+	//	log.Println("Faile to reagin body", err)
+	//	return echoContext.String(http.StatusInternalServerError, "DEU RUIM")
+	//}
+	//err = json.Unmarshal(b, &c)
+	//if err != nil {
+	//	print("deu ruim no json")
+	//}
+	//
 	//customer := CustomerDTO{
 	//	Name:             c.Name,
 	//	Email:            c.Email,
@@ -48,12 +52,28 @@ func TransactionalDataHandler(echoContext echo.Context) error {
 	//	AllTransactions:  c.AllTransactions,
 	//	TransactionValue: c.TransactionValue,
 	//}
-	rulesHandler(&c)
-	returnToTccRandom(c)
-	return echoContext.JSON(http.StatusOK, c)
+	//rulesHandler(&customer)
+	//returnToTccRandom(customer)
+	//return echoContext.JSON(http.StatusOK, c)
+	c := new(Customer)
+	if err := echoContext.Bind(c); err != nil {
+		return nil
+	}
+	customer := CustomerDTO{
+		Name:             c.Name,
+		Email:            c.Email,
+		Document:         c.Document,
+		CreditCard:       c.CreditCard,
+		Address:          c.Address,
+		BirthDate:        c.BirthDate,
+		TransactionValue: c.TransactionValue,
+	}
+	rulesHandler(&customer)
+	returnToTccRandom(customer)
+	return echoContext.JSON(http.StatusOK, customer)
 }
 
-func returnToTccRandom(dto Customer) {
+func returnToTccRandom(dto CustomerDTO) {
 	jsonData, err := json.Marshal(dto)
 	if err != nil {
 		log.Fatal("Error on marshal: ", err)
